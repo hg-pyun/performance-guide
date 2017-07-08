@@ -223,3 +223,18 @@ script를 합치기 위해서는 [gulp](http://gulpjs.com/), [grunt](https://gru
 #### minify & uglify
 minify는 불필요한 공백을 제거하는 작업이고, uglify는 코드 난독화 및 production에서 불필요한 코드(console.log)를 제거해주는 작업입니다.
 해당 작업을 통해 용량을 줄이고 코드를 최적화 할수 있습니다. 대부분의 task runner나 webpack 등을 사용해서 작업할 수 있습니다.
+
+# Contribute
+#### Document convention
+가장 큰 카테고리는 '##'을 사용합니다.
+카테고리 안에서 소분류는 '####'을 사용합니다.
+```
+// example
+category : ## Javascript
+s-category : #### closure
+contents : this is closure 
+example : use ```  
+```
+
+#### pull request
+새로운 내용이나 수정은 Pull Request형식으로 보내주시길 바랍니다. 또한 이 문서는 누구나 수정할 수 있으며 재배포시 출처를 꼭 밝혀주시길 바랍니다.
