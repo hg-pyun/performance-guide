@@ -175,7 +175,7 @@ Event Binding으로 구현하는 것보다 Event Delegation이 성능이 더 효
 #### requestAnimationFrame
 시각적 변화를 위해 주기적으로 업데이트가 필요한 경우 setTimeout, setInterval보다 requestAnimationFrame을 사용하게는게 성능에 유리합니다.
 
-### try ~ catch
+#### try ~ catch
 try ~ catch 구문안에 있는 코드들은 컴파일러가 최적하지 못합니다.
 따라서 성능에 민감한 작업들은 함수로 한번 감싸주세요.
 ```javascript
@@ -188,6 +188,160 @@ try {
 } catch (e) {
   // 예외를 여기에서 처리합니다.
 }
+```
+
+#### 함수 선언문 vs 함수 표현식
+함수 선언문을 사용하면 스코프 최상단으로 호이스팅되므로 프로그램이 의도적으로 동작하지 않을 수 있고,  
+스크립트를 로딩했을 때 [VO(Variable Object)](http://mohwa.github.io/blog/javascript/2015/10/14/vo-inJS/)에 할당하기 때문에 성능상 이슈도 존재합니다.  
+```javascript
+alert(x); // function x() {}
+if(x === undefined) { // 실행되지 않습니다.
+  alert('나는 아직 할당되지 않았어!');
+}
+var x = 2;
+function x() {}
+alert(x); // 2, 변수 x를 생성하고 할당한 것 이후에 함수 x를 선언했지만 호이스팅에 의해 의도치 않게 동작합니다.
+```
+
+위와 같은 이유로 인해 함수 표현식 사용을 **권장**합니다.  
+```javascript
+alert(x); // undefined, 예상하지 못했다면 호이스팅을 공부합시다.
+if(x === undefined) { // 드디어 실행됩니다.
+  alert('나는 아직 할당되지 않았어!');
+}
+var x = 2;
+x = function(){};
+alert(x); // function(){}
+```
+
+#### var의 중복 선언
+기존 프로그래밍 언어에서는 동일한 변수를 중복 선언하면 에러를 유발했습니다.  
+하지만 자바스크립트에서는 오류가 나진 않지만 몇 바이트의 트래픽이라도 아끼려면 var의 중복 선언은 피합시다.
+```javascript
+var a = 1;
+alert(a); // 1
+var a = 2; // 그냥 a = 2; 라고 쓰면 된다.
+alert(a); // 2
+```
+
+혹시 기존 프로그래밍 언어를 하던 사람은 변수의 스코프(사용 범위)를 당연히 블록(**{}**)이라고 생각하실 겁니다.  
+하지만 자바스크립트에서는 함수 단위의 스코프를 가지기 때문에 쓸 데 없이 var의 중복 선언을 하지 않도록 조심합시다.  
+```javascript
+var sum = 0;
+for(var i=0; i<10; i++) {
+  sum += i;
+}
+alert(i); // 10, 함수 단위의 스코프이기 때문에 블록(for 문)에서 선언한 변수는 살아있습니다.
+var i = 20; // i = 20; 이라고 적어서 var의 중복 선언을 피합시다.
+alert(i); // 20;
+
+// 아래가 함수 단위의 스코프를 보여주는 예제입니다.  
+var a = function(b) {
+  // 함수 안에서 a는 20
+  var a = 20;
+  return a + b;
+};
+
+// 함수 밖에서 a는 함수입니다.
+alert(a);
+```
+
+#### 형변환(캐스팅) 연산자 성능
+##### Any to Boolean  
+* new Boolean(any).valueOf()
+* Boolean(any)  
+* !!any  
+```javascript
+var iterations = 10000000;
+console.time('new Boolean(any).valueOf()');
+for(var i=0; i<iterations; i++){
+    new Boolean(1.1).valueOf(); // new Boolean(any).valueOf(): 691.537ms
+}
+console.timeEnd('new Boolean(any).valueOf()');
+console.time('Boolean(any)');
+for(i=0; i<iterations; i++){
+    Boolean(1.1); // String(any): 27.272ms
+}
+console.timeEnd('Boolean(any)');
+console.time('!!any');
+for(i=0; i<iterations; i++){
+    !!1.1; // !!any: 27.04ms
+}
+console.timeEnd('!!any');
+```
+
+##### Any to Number
+* Number.parseInt(any[, radix])  
+* Number.parseFloat(any)  
+* new Number(any).valueOf()  
+* Number(any)  
+* +any, 1*any  
+```javascript
+var iterations = 10000000;
+console.time('Number.parseInt(any)');
+for(var i=0; i<iterations; i++){
+    Number.parseInt('1.1'); // Number.parseInt(any): 561.062ms
+}
+console.timeEnd('Number.parseInt(any)');
+console.time('Number.parseInt(any) with radix');
+for(i=0; i<iterations; i++){
+    Number.parseInt('1.1', 10); // Number.parseInt(any) with radix: 511.062ms
+}
+console.timeEnd('Number.parseInt(any) with radix');
+console.time('Number.parseFloat(any)');
+for(i=0; i<iterations; i++){
+    Number.parseFloat('1.1'); // Number.parseFloat(any): 737.437ms
+}
+console.timeEnd('Number.parseFloat(any)');
+console.time('new Number(any).valueOf()');
+for(i=0; i<iterations; i++){
+    new Number('1.1').valueOf(); // new Number(any).valueOf(): 1112.782ms
+}
+console.timeEnd('new Number(any).valueOf()');
+console.time('Number(any)');
+for(i=0; i<iterations; i++){
+    Number('1.1'); // Number(any): 1066.577ms
+}
+console.timeEnd('Number(any)');
+console.time('+any');
+for(i=0; i<iterations; i++){
+    +'1.1'; // +any: 20.724ms
+}
+console.timeEnd('+any');
+console.time('1*any');
+for(i=0; i<iterations; i++){
+    1*'1.1'; // 1*any: 21.459ms
+}
+console.timeEnd('1*any');
+```
+
+##### Any to String
+* Wrapper Object.prototype.toString()  
+* new String(any).valueOf()
+* String(any)  
+* '' + any  
+```javascript
+var iterations = 10000000;
+console.time('Wrapper Object.prototype.toString()');
+for(var i=0; i<iterations; i++){
+    1.1.toString(); // Wrapper Object.prototype.toString(): 268.619ms
+}
+console.timeEnd('Wrapper Object.prototype.toString()');
+console.time('new String(any).valueOf()');
+for(i=0; i<iterations; i++){
+    new String(1.1).valueOf(); // new String(any).valueOf(): 213.537ms
+}
+console.timeEnd('new String(any).valueOf()');
+console.time('String(any)');
+for(i=0; i<iterations; i++){
+    String(1.1); // String(any): 159.045ms
+}
+console.timeEnd('String(any)');
+console.time('\'\' + any');
+for(i=0; i<iterations; i++){
+    '' + 1.1; // '' + any: 68.594ms
+}
+console.timeEnd('\'\' + any');
 ```
 
 ## HTML
