@@ -39,9 +39,7 @@ document.getElementById("list").innerHTML = list;
 - forEach(function(item){})
 
 // 아래 구문이 성능이 더 좋습니다.
-for(var i=0; i<length; i++)
-
-
+for(var i=0; i<length; i++){}
 ```
 
 #### array.length
@@ -85,7 +83,6 @@ array[1] = 1.5;
 
 // 아래 코드가 더 효율적입니다.
 var array = [1, 1.5];
-
 ```
 
 #### 문자열 조합
@@ -103,7 +100,7 @@ for (i=0; i<10000; i++) {
 var str = array.join('');
 ```
 
-#### object 할
+#### object 할당
 ```javascript
 /* object */
 // var obj = {};
@@ -118,8 +115,7 @@ var obj = {
 ```
 #### Event
 ```javascript
-Event Binding보다 Event Delegation이 선능이 더 좋습니다.
-
+Event Binding보다 Event Delegation이 성능이 더 좋습니다.
 ```
 ### try ~ catch
 ```javascript
