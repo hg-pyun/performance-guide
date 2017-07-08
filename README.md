@@ -191,7 +191,8 @@ try {
 
 ## HTML
 #### script tag
-브라우저가 script 태그를 만나면 script 태그가 처리될때까지 body의 로드가 지연됩니다. 따라서 script 태그는 head보다 body밑에 넣는것이 더 효율적입니다.
+브라우저가 script 태그를 만나면 script 태그가 처리될때까지 body의 로드가 지연됩니다. 
+따라서 script 태그는 head보다 body밑에 넣는것이 사용자가 view를 더 빨리볼 수 있습니다.
 ```html
 <html>
 <head>
