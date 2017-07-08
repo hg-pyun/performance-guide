@@ -61,7 +61,26 @@ try {
   // 예외를 여기에서 처리합니다.
 }
 ```
+#### array type
+Array의 type이 변경되면 성능 저하가 발생하므로 type이 변경되지 않도록 하는것이 좋습니다.
+또 Typped Array를 사용하는 것이 성능에 더 좋습니다.
+```javascript
+// 아래 배열은 마지막에 string을 넣음으로서 배열 type이 변경됩니다.
+var array = new Array(1000);
+for(var i=0; i<1000; i++){
+    array[i] = i;
+}
+array[999] = "this is string";
 
+// 아래 코드가 더 성능이 좋습니다.
+var array = new Array(1000);
+array[0] = "dummy";
+
+for(var i=0; i<1000; i++){
+    array[i] = i;
+}
+array[999] = "this is string"; 
+```
 #### array, object 할당
 ```javascript
 /* array */
