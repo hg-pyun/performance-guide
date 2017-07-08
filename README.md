@@ -74,16 +74,6 @@ for(var i=0; i<1000; i++){
 }
 array[999] = "this is string"; 
 ```
-#### array, object 할당
-```javascript
-/* array */
-var array = new Array();
-array[0] = 1;
-array[1] = 1.5;
-
-// 아래 코드가 더 효율적입니다.
-var array = [1, 1.5];
-```
 
 #### 문자열 조합
 ```javascript
@@ -100,7 +90,16 @@ for (i=0; i<10000; i++) {
 var str = array.join('');
 ```
 
-#### object 할당
+#### array, object 할당
+```javascript
+/* array */
+var array = new Array();
+array[0] = 1;
+array[1] = 1.5;
+
+// 아래 코드가 더 효율적입니다.
+var array = [1, 1.5];
+```
 ```javascript
 /* object */
 // var obj = {};
