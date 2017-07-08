@@ -30,7 +30,7 @@ if(someObj.someProp){
 someObj.someProp && someObj.someProp();
 ```
 
-## double exclamation mark
+#### double exclamation mark
 !! 연산자를 사용하면 값의 유무를 판별할 수 있습니다.
 ```javascript
 // 아래 경우를 제외하곤 true를 반환합니다.
@@ -130,7 +130,7 @@ array[999] = "this is string";
 ```
 
 #### 문자열 조합
-+ 연산자보다 배열을 사용해서 조합하는게 성능에 유리합니다. 다만 최신브라우저의 경우에는 엔진이 최적화를 해주므로 + 연산자를 사용하는것이 유리합니다. (IE8 기준)
+'+' 연산자보다 배열을 사용해서 조합하는게 성능에 유리합니다. 다만 최신브라우저의 경우에는 엔진이 최적화를 해주므로 '+' 연산자를 사용하는것이 유리합니다. (IE8 기준)
 ```javascript
 var str;
 for (var i=0; i<10000; i++) {
@@ -192,7 +192,7 @@ try {
 ## HTML
 #### script tag
 브라우저가 script 태그를 만나면 script 태그가 처리될때까지 body의 로드가 지연됩니다. 따라서 script 태그는 head보다 body밑에 넣는것이 더 효율적입니다.
-```
+```html
 <html>
 <head>
     <script>some script</script>
