@@ -77,6 +77,7 @@ document.getElementById("list").innerHTML = list;
 ```
 #### loop syntax
 특별한 이유가 없다면 for in, forEach보다 for문을 사용하는게 좋습니다.
+(사실 적은 데이터에서는 실행 속도의 큰 차이는 없습니다.)
 ```javascript
 - for (item in array)
 - forEach(function(item){})
