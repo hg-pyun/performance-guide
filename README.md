@@ -17,6 +17,33 @@ else {
 const result = variable  || 'somthing';
 ```
 
+#### innerHtml
+```javascript
+// 루프를 돌때마다 reflow, repaint가 일어납니다.
+for(var i=0; i<100; i++){
+    document.getElementById("list").innerHTML += "<li>list</li>";
+}
+
+// innerHtml 횟수는 최소한으로 줄이는게 성능에 더 좋습니다.
+// (arary.join을 사용하면 셩능을 더 개선할 수 있습니다.)
+let list = '';
+for(var i=0; i<100; i++){
+    list += "<li>list</li>";
+}
+
+document.getElementById("list").innerHTML = list;
+```
+#### loop syntax
+```javascript
+- for item in array
+- forEach(function(item){})
+
+// 아래 구문이 성능이 더 좋습니다.
+for(var i=0; i<length; i++)
+
+
+```
+
 #### array.length
 ```javascript
 // loop를 돌때마다 array 참조가 일어남.
@@ -29,38 +56,6 @@ var l = arr.length;
 for (i = 0; i < l; i++) {}
 ```
 
-#### innerHtml
-```javascript
-// 루프를 돌때마다 reflow, repaint가 일어납니다.
-// (특
-for(var i=0; i<100; i++){
-    document.getElementById("list").innerHTML += "<li>list</li>";
-}
-
-// innerHtml 횟수는 최소한으로 줄이는게 성능에 더 좋습니다.
-let list = '';
-for(var i=0; i<100; i++){
-    list += "<li>list</li>";
-}
-
-document.getElementById("list").innerHTML = list;
-
-```
-#### try ~ catch
-```javascript
-try ~ catch 구문안에 있는 코드들은 컴파일러가 최적하지 못합니다.
-따라서 성능에 민감한 작업들은 함수로 한번 감싸주세요.
-
-function perf_sensitive() {
-  // 성능에 민감한 작업을 여기에서 처리합니다.
-}
-
-try {
-  perf_sensitive()
-} catch (e) {
-  // 예외를 여기에서 처리합니다.
-}
-```
 #### array type
 Array의 type이 변경되면 성능 저하가 발생하므로 type이 변경되지 않도록 하는것이 좋습니다.
 또 Typped Array를 사용하는 것이 성능에 더 좋습니다.
@@ -74,8 +69,8 @@ array[999] = "this is string";
 
 // 아래 코드가 더 성능이 좋습니다.
 var array = new Array(1000);
-array[0] = "dummy";
 
+array[0] = "dummy";
 for(var i=0; i<1000; i++){
     array[i] = i;
 }
@@ -93,6 +88,22 @@ var array = [1, 1.5];
 
 ```
 
+#### 문자열 조합
+```javascript
+var str;
+for (var i=0; i<10000; i++) {
+	str += 'prefix'+i+'suffix';
+}
+
+// 아래 코드가 더 효율적입니다.
+var array = [];
+for (i=0; i<10000; i++) {
+	array.push('prefix', i, 'suffix');
+}
+var str = array.join('');
+```
+
+#### object 할
 ```javascript
 /* object */
 // var obj = {};
@@ -104,6 +115,50 @@ var obj = {
     hello : 'hello',
     world : 'world'
 }
+```
+#### Event
+```javascript
+Event Binding보다 Event Delegation이 선능이 더 좋습니다.
+
+```
+### try ~ catch
+```javascript
+try ~ catch 구문안에 있는 코드들은 컴파일러가 최적하지 못합니다.
+따라서 성능에 민감한 작업들은 함수로 한번 감싸주세요.
+
+function perf_sensitive() {
+  // 성능에 민감한 작업을 여기에서 처리합니다.
+}
+
+try {
+  perf_sensitive()
+} catch (e) {
+  // 예외를 여기에서 처리합니다.
+}
+```
+
+## HTML
+#### script tag
+브라우저가 script 태그를 만나면 script 태그가 처리될때까지 body의 로드가 지연됩니다. 따라서 script 태그는 head보다 body밑에 넣는것이 더 좋습니다.
+```
+<html>
+<head>
+    <script>some script</script>
+</head>
+<body>
+    something
+</body>
+<html>
+
+// 아래 코드가 사용자 입장에서 더 좋습니다.
+<html>
+<head>
+</head>
+<body>
+    something
+</body>
+<script>some script</script>
+<html>
 ```
 
 ## Refnerence
