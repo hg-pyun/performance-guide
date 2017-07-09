@@ -115,6 +115,7 @@ Array의 type이 변경되면 성능 저하가 발생하므로 type이 변경되
 ```javascript
 // 아래 배열은 마지막에 string을 넣음으로서 배열 type이 변경됩니다.
 var array = new Array(1000);
+
 for(var i=0; i<1000; i++){
     array[i] = i;
 }
@@ -198,6 +199,7 @@ alert(x); // function x() {}
 if(x === undefined) { // 실행되지 않습니다.
   alert('나는 아직 할당되지 않았어!');
 }
+
 var x = 2;
 function x() {}
 alert(x); // 2, 변수 x를 생성하고 할당한 것 이후에 함수 x를 선언했지만 호이스팅에 의해 의도치 않게 동작합니다.
@@ -209,6 +211,7 @@ alert(x); // undefined
 if(x === undefined) { // 드디어 실행됩니다.
   alert('나는 아직 할당되지 않았어!');
 }
+
 var x = 2;
 x = function(){};
 alert(x); // function(){}
@@ -220,6 +223,7 @@ alert(x); // function(){}
 ```javascript
 var a = 1;
 alert(a); // 1
+
 var a = 2; // 그냥 a = 2; 라고 쓰면 된다.
 alert(a); // 2
 ```
@@ -283,31 +287,37 @@ for(var i=0; i<iterations; i++){
     Number.parseInt('1.1'); // Number.parseInt(any): 561.062ms
 }
 console.timeEnd('Number.parseInt(any)');
+
 console.time('Number.parseInt(any) with radix');
 for(i=0; i<iterations; i++){
     Number.parseInt('1.1', 10); // Number.parseInt(any) with radix: 511.062ms
 }
 console.timeEnd('Number.parseInt(any) with radix');
+
 console.time('Number.parseFloat(any)');
 for(i=0; i<iterations; i++){
     Number.parseFloat('1.1'); // Number.parseFloat(any): 737.437ms
 }
 console.timeEnd('Number.parseFloat(any)');
+
 console.time('new Number(any).valueOf()');
 for(i=0; i<iterations; i++){
     new Number('1.1').valueOf(); // new Number(any).valueOf(): 1112.782ms
 }
 console.timeEnd('new Number(any).valueOf()');
+
 console.time('Number(any)');
 for(i=0; i<iterations; i++){
     Number('1.1'); // Number(any): 1066.577ms
 }
 console.timeEnd('Number(any)');
+
 console.time('+any');
 for(i=0; i<iterations; i++){
     +'1.1'; // +any: 20.724ms
 }
 console.timeEnd('+any');
+
 console.time('1*any');
 for(i=0; i<iterations; i++){
     1*'1.1'; // 1*any: 21.459ms
@@ -327,16 +337,19 @@ for(var i=0; i<iterations; i++){
     1.1.toString(); // Wrapper Object.prototype.toString(): 268.619ms
 }
 console.timeEnd('Wrapper Object.prototype.toString()');
+
 console.time('new String(any).valueOf()');
 for(i=0; i<iterations; i++){
     new String(1.1).valueOf(); // new String(any).valueOf(): 213.537ms
 }
 console.timeEnd('new String(any).valueOf()');
+
 console.time('String(any)');
 for(i=0; i<iterations; i++){
     String(1.1); // String(any): 159.045ms
 }
 console.timeEnd('String(any)');
+
 console.time('\'\' + any');
 for(i=0; i<iterations; i++){
     '' + 1.1; // '' + any: 68.594ms
@@ -451,5 +464,5 @@ contents : this is closure
 example : use ```  
 ```
 
-#### pull request
+#### Pull Request
 새로운 내용이나 수정은 Pull Request형식으로 보내주시길 바랍니다. 또한 이 문서는 누구나 수정할 수 있으며 재배포시 출처를 꼭 밝혀주시길 바랍니다.
