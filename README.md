@@ -1,6 +1,10 @@
 # performance-guide
 javascript 개발시 성능 최적화에 대한 팁들을 정리해 놓은 가이드입니다. 이 문서는 syntax, convention, shorthand 등 전반적인 내용을 다룹니다.
 
+#### Framework & Library guide
+- [React](https://github.com/haegul/performance-guide/blob/master/REACT.md)
+- [Vue](https://github.com/haegul/performance-guide/blob/master/VUE.md)
+
 ## Syntax
 
 #### || 연산자
@@ -219,7 +223,7 @@ alert(x); // function(){}
 
 #### var의 중복 선언
 기존 프로그래밍 언어에서는 동일한 변수를 중복 선언하면 에러를 유발했습니다.  
-하지만 자바스크립트에서는 오류가 나진 않지만 몇 바이트의 트래픽이라도 아끼려면 var의 중복 선언은 피합시다.
+하지만 자바스크립트에서는 오류가 나진 않지만 몇 바이트의 트래픽이라도 아끼려면 var의 중복 선언은 피하는게 좋습니다.
 ```javascript
 var a = 1;
 alert(a); // 1
@@ -229,7 +233,7 @@ alert(a); // 2
 ```
 
 혹시 기존 프로그래밍 언어를 하던 사람은 변수의 [스코프](https://perfectacle.github.io/2017/04/27/js-003-scope/)를 당연히 블록(**{}**)이라고 생각하실 겁니다.  
-하지만 자바스크립트에서는 함수 단위의 스코프를 가지기 때문에 쓸 데 없이 var의 중복 선언을 하지 않도록 조심합시다.  
+하지만 자바스크립트에서는 함수 단위의 스코프를 가지기 때문에 쓸 데 없이 var의 중복 선언을 하지 않도록 조심하는게 좋습니다.  
 ```javascript
 var sum = 0;
 for(var i=0; i<10; i++) {
