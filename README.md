@@ -1,7 +1,7 @@
 # performance-guide
-javascript 개발시 성능 최적화에 대한 팁들을 정리해 놓은 가이드입니다. 이 문서는 syntax, convention, shorthand 등 전반적인 내용을 다룹니다.
+Front-End 개발시 성능 최적화에 대한 팁들을 정리해 놓은 가이드입니다. 이 문서는 syntax, convention, shorthand 등 전반적인 내용을 다룹니다.
 
-#### Framework & Library guide
+## Framework & Library guide
 - [React](https://github.com/haegul/performance-guide/blob/master/REACT.md)
 - [Vue](https://github.com/haegul/performance-guide/blob/master/VUE.md)
 
